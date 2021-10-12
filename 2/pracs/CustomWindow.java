@@ -1,6 +1,9 @@
 import java.awt.Color;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
+import java.awt.Dimension;
+
+import points.CustomPoint;
 
 public class CustomWindow extends JFrame {
         
@@ -9,22 +12,22 @@ public class CustomWindow extends JFrame {
 
     public CustomWindow(String title, int width, int height) {
         super(title);
-
-        JPanel panel = new JPanel();
-        customGraphics = new CustomGraphics(panel);
-
-        this.configureFrame(width, height, panel);
         this.paint(this.getGraphics());
+
+        customGraphics = new CustomGraphics();
+        this.configureFrame(new Dimension(width, height),
+            customGraphics);
     }
 
-    private void configureFrame(int width, int height, JPanel panel) {
-        setContentPane(panel);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setResizable(false); // Disable window risizing
-        setSize(width, height);
-        setLocationRelativeTo(null);
-        setLayout(null);
-        setVisible(true);
+    private void configureFrame(Dimension dimension, JPanel panel) {
+        this.add(panel);
+        this.setContentPane(panel);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setSize(dimension);
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        this.setLayout(null);
+        this.setVisible(true);
     }
 
     public void setColor(Color color) {

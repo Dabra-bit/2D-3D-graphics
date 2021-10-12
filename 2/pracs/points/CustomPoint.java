@@ -1,3 +1,4 @@
+package points;
 
 public class CustomPoint {
     private int x;
