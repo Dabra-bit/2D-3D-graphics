@@ -5,16 +5,18 @@ import java.awt.Image;
 import java.awt.Graphics;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import circles.CustomCircle;
-
 import javax.swing.ImageIcon;
 import java.awt.image.BufferedImage;
 
 import factories.CircleFactory;
 import factories.LinesFactory;
+import ellipses.BasicEllipse;
+import ellipses.CustomEllipse;
+import circles.CustomCircle;
 import lines.CustomLine;
 import points.CustomPoint;
+import rectangles.BasicRectangle;
+import rectangles.CustomRectangle;
 
 public class CustomGraphics extends JPanel {
     public static final Color DEFAULT_PIXEL_COLOR = Color.BLACK;
@@ -96,6 +98,20 @@ public class CustomGraphics extends JPanel {
         CircleFactory circleFactory = new CircleFactory();
         CustomCircle newCircle = circleFactory.getCircle(center, radius, circleType);
         List<CustomPoint> pointsToDraw = newCircle.computeFigurePoints();
+        
+        this.drawFigure(pointsToDraw);
+    }
+
+    public void drawEllipse(CustomPoint center, int yRadius, int xRadius) {
+        CustomEllipse newEllipse = new BasicEllipse(center, yRadius, xRadius);
+        List<CustomPoint> pointsToDraw = newEllipse.computeFigurePoints();
+        
+        this.drawFigure(pointsToDraw);
+    }
+
+    public void drawRectangle(CustomPoint point1, CustomPoint point2) {
+        CustomRectangle newRectangle = new BasicRectangle(point1, point2);
+        List<CustomPoint> pointsToDraw = newRectangle.computeFigurePoints();
         
         this.drawFigure(pointsToDraw);
     }

@@ -61,4 +61,19 @@ public class CustomWindow extends JFrame {
     public void drawCircle(int x, int y, int radius) {
         this.drawCircle(x, y, radius, 0);
     }
+
+    public void drawEllipse(int x, int y, int yRadius, int xRadius) {
+        this.customGraphics.drawEllipse(
+            new CustomPoint(x, y),
+            yRadius,
+            xRadius
+            );
+    }
+
+    public void drawRectangle(int x1, int y1, int x2, int y2) {
+        this.customGraphics.drawRectangle(
+            new CustomPoint(x1, y1),
+            new CustomPoint(x2, y2)
+            );
+    }
 }
