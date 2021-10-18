@@ -1,16 +1,18 @@
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
-
 import java.awt.Image;
 import java.awt.Graphics;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import factories.LinesFactory;
+import circles.CustomCircle;
 
 import javax.swing.ImageIcon;
 import java.awt.image.BufferedImage;
 
+import factories.CircleFactory;
+import factories.LinesFactory;
 import lines.CustomLine;
 import points.CustomPoint;
 
@@ -67,9 +69,19 @@ public class CustomGraphics extends JPanel {
         this.drawnImageGraphics.drawImage(this.pixel, p.x(), p.y(), this);
     }
 
-    public void drawPixel(CustomPoint p) {
-        this.paintPixel(p);
+    private void drawFigure(List<CustomPoint> pointsToDraw) {
+        for (CustomPoint point : pointsToDraw) {
+            this.paintPixel(point);
+        }
+
         this.repaint();
+    }
+
+    public void drawPixel(CustomPoint p) {
+        List<CustomPoint> pointsToDraw = new ArrayList<>();
+        pointsToDraw.add(p);
+
+        this.drawFigure(pointsToDraw);
     }
 
     public void drawLine(CustomPoint p1, CustomPoint p2, int lineType) {
@@ -77,11 +89,15 @@ public class CustomGraphics extends JPanel {
         CustomLine newLine = linesFactory.getCustomLine(p1, p2, lineType);
         List<CustomPoint> pointsToDraw = newLine.computeLinePoints();
 
-        for (CustomPoint point : pointsToDraw) {
-            this.paintPixel(point);
-        }
+        this.drawFigure(pointsToDraw);
+    }
 
-        this.repaint();
+    public void drawCircle(CustomPoint center, int radius, int circleType) {
+        CircleFactory circleFactory = new CircleFactory();
+        CustomCircle newCircle = circleFactory.getCircle(center, radius, circleType);
+        List<CustomPoint> pointsToDraw = newCircle.computeFigurePoints();
+        
+        this.drawFigure(pointsToDraw);
     }
 
     @Override

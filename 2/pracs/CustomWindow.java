@@ -49,4 +49,16 @@ public class CustomWindow extends JFrame {
     public void drawLine(int x1, int y1, int x2, int y2) {
         this.drawLine(x1, y1, x2, y2, 0);
     }
+
+    public void drawCircle(int x, int y, int radius, int circleType) {
+        this.customGraphics.drawCircle(
+            new CustomPoint(x, y),
+            radius,
+            circleType
+            );
+    }
+
+    public void drawCircle(int x, int y, int radius) {
+        this.drawCircle(x, y, radius, 0);
+    }
 }
