@@ -5,11 +5,13 @@ import java.awt.Image;
 import java.awt.Graphics;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import factories.LinesFactory;
+
 import javax.swing.ImageIcon;
 import java.awt.image.BufferedImage;
 
 import lines.CustomLine;
-import lines.DDACustomLine;
 import points.CustomPoint;
 
 public class CustomGraphics extends JPanel {
@@ -56,7 +58,7 @@ public class CustomGraphics extends JPanel {
         this.color = color;
     }
 
-    public void drawPixel(CustomPoint p) {
+    private void paintPixel(CustomPoint p) {
         this.pixel.setRGB(0, 0, this.color.getRGB());
 
         if(this.drawnImage == null)
@@ -65,13 +67,21 @@ public class CustomGraphics extends JPanel {
         this.drawnImageGraphics.drawImage(this.pixel, p.x(), p.y(), this);
     }
 
-    public void drawLine(CustomPoint p1, CustomPoint p2) {
-        CustomLine newLine = new DDACustomLine(p1, p2);
+    public void drawPixel(CustomPoint p) {
+        this.paintPixel(p);
+        this.repaint();
+    }
+
+    public void drawLine(CustomPoint p1, CustomPoint p2, int lineType) {
+        LinesFactory linesFactory = new LinesFactory();
+        CustomLine newLine = linesFactory.getCustomLine(p1, p2, lineType);
         List<CustomPoint> pointsToDraw = newLine.computeLinePoints();
 
         for (CustomPoint point : pointsToDraw) {
-            this.drawPixel(point);
+            this.paintPixel(point);
         }
+
+        this.repaint();
     }
 
     @Override

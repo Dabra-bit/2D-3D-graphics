@@ -38,20 +38,15 @@ public class CustomWindow extends JFrame {
         this.customGraphics.drawPixel(new CustomPoint(x, y));
     }
 
-    public void drawLine(int x1, int y1, int x2, int y2) {
+    public void drawLine(int x1, int y1, int x2, int y2, int lineType) {
         this.customGraphics.drawLine(
             new CustomPoint(x1, y1),
-            new CustomPoint(x2, y2)
+            new CustomPoint(x2, y2),
+            lineType
             );
     }
 
-    public void drawPixel(int x, int y, Color color) {
-        this.setColor(color);
-        this.drawPixel(x, y);
-    }
-
-    public void drawLine(int x1, int y1, int x2, int y2, Color color) {
-        this.setColor(color);
-        this.drawLine(x1, y1, x2, y2);
+    public void drawLine(int x1, int y1, int x2, int y2) {
+        this.drawLine(x1, y1, x2, y2, 0);
     }
 }
