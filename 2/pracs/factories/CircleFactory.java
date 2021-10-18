@@ -1,6 +1,7 @@
 package factories;
 
 import circles.BasicCircle;
+import circles.PolarCoordsCircle;
 import circles.CustomCircle;
 import points.CustomPoint;
 
@@ -11,14 +12,14 @@ public class CircleFactory {
 
     public CustomCircle getCircle(CustomPoint center, int radius, int circleType) {
         if(circleType == 0) {
-            circleType = DEFAULT_CIRCLE;
+            circleType = POLAR_COORDS_CIRCLE;
         }
         
         switch(circleType) {
             case BASIC_CIRCLE:
                 return new BasicCircle(center, radius);
             case POLAR_COORDS_CIRCLE:
-                return null;
+                return new PolarCoordsCircle(center, radius);
             default:
                 return null;
         }
