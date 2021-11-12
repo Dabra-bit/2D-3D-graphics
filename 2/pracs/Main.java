@@ -8,11 +8,11 @@ import points.CustomPoint;
 
 public class Main {
     public static void main(String[] args) {
-        CustomWindow cw = new CustomWindow("1st prac - Curve 3.2", 600, 600);
+        CustomWindow cw = new CustomWindow("2nd prac - Curve 3.3", 600, 600);
         cw.setColor(Color.BLUE);
 
         final int sizeFactor = 100;
-        final int numberOfPointsInCurve = 8;
+        final int numberOfPointsInCurve = 100;
         double chunk = Math.PI / (numberOfPointsInCurve - 1);
 
         List<CustomPoint> points = new ArrayList<>();
