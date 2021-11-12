@@ -75,8 +75,6 @@ public class CustomGraphics extends JPanel {
         for (CustomPoint point : pointsToDraw) {
             this.paintPixel(point);
         }
-
-        this.repaint();
     }
 
     public void drawPixel(CustomPoint p) {
