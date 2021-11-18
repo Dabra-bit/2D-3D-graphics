@@ -8,19 +8,19 @@ import points.CustomPoint;
 
 public class Main {
     public static void main(String[] args) {
-        CustomWindow cw = new CustomWindow("5th practice - Curve 3.6", 600, 600);
+        CustomWindow cw = new CustomWindow("6th practice - Curve 3.7", 600, 600);
         cw.setColor(Color.BLUE);
 
-        final int sizeFactor = 50;
-        final double twoTimesPI = 2 * Math.PI;
+        final int sizeFactor = 10;
+        final double limit = 14 * Math.PI;
 
         List<CustomPoint> points = new ArrayList<>();
 
-        for(double t = 0; t <= twoTimesPI; t += 0.01) {
-            double x = Math.cos(t) + Math.cos(7 * t) / 2 + Math.sin(17 * t) / 3;
-            double y = Math.sin(t) + Math.sin(7 * t) / 2 + Math.cos(17 * t) / 3;
+        for(double t = 0; t <= limit; t += 0.01) {
+            double x = 17 * Math.cos(t) + 7 * Math.cos(17 / (double) 7 * t);
+            double y = 17 * Math.sin(t) - 7 * Math.sin(17 / (double) 7 * t);
 
-            int xScalated = (int) Math.ceil(sizeFactor * x + 300);
+            int xScalated = (int) Math.ceil(sizeFactor * x + 250);
             int yScalated = (int) Math.ceil(sizeFactor * y + 250);
 
             points.add(new CustomPoint(xScalated, yScalated));
