@@ -8,19 +8,20 @@ import points.CustomPoint;
 
 public class Main {
     public static void main(String[] args) {
-        CustomWindow cw = new CustomWindow("2nd prac - Curve 3.3", 600, 600);
+        CustomWindow cw = new CustomWindow("5th practice - Curve 3.6", 600, 600);
         cw.setColor(Color.BLUE);
 
-        final int sizeFactor = 100;
-        final int numberOfPointsInCurve = 100;
-        double chunk = Math.PI / (numberOfPointsInCurve - 1);
+        final int sizeFactor = 50;
+        final double twoTimesPI = 2 * Math.PI;
 
         List<CustomPoint> points = new ArrayList<>();
-        double x = 0;
 
-        for(int i = 0; i < numberOfPointsInCurve; i++, x += chunk) {
-            int xScalated = (int) Math.ceil(sizeFactor * x);
-            int yScalated = (int) Math.ceil(sizeFactor * Math.sin(x));
+        for(double t = 0; t <= twoTimesPI; t += 0.01) {
+            double x = Math.cos(t) + Math.cos(7 * t) / 2 + Math.sin(17 * t) / 3;
+            double y = Math.sin(t) + Math.sin(7 * t) / 2 + Math.cos(17 * t) / 3;
+
+            int xScalated = (int) Math.ceil(sizeFactor * x + 300);
+            int yScalated = (int) Math.ceil(sizeFactor * y + 250);
 
             points.add(new CustomPoint(xScalated, yScalated));
         }
@@ -31,11 +32,11 @@ public class Main {
             cw.drawLine(point1.x(), point1.y(), point2.x(), point2.y());
         }
 
-        cw.setColor(Color.RED);
+        // cw.setColor(Color.RED);
 
-        for(CustomPoint point : points) {
-            cw.drawPixel(point.x(), point.y());
-        }
+        // for(CustomPoint point : points) {
+        //     cw.drawPixel(point.x(), point.y());
+        // }
 
         cw.repaint();
     }
