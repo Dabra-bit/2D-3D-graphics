@@ -1,5 +1,8 @@
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Color;
@@ -7,8 +10,20 @@ import java.awt.Graphics;
 import java.util.Calendar;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
+
 import java.io.IOException;
+import java.io.InputStream;
+
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
 import java.util.GregorianCalendar;
 import java.awt.image.BufferedImage;
 
@@ -78,6 +93,9 @@ class MyClock extends JFrame implements Runnable {
     setSize(this.width, this.height); // Set window size
     setLocationRelativeTo(null); // Open window in the center of the screen
     setLayout(null);
+
+    // Draw controls
+    this.drawControls();
   }
 
   public void visible(boolean visible) {
@@ -114,7 +132,7 @@ class MyClock extends JFrame implements Runnable {
 
     for(int i = 0, temp = 0; i < thick; i++, temp+=2) {
       if(i == 0) {
-        g.setColor(Color.WHITE);
+        g.setColor(new Color(1f, 1f, 1f, 0.5f));
         g.fillOval(x - i, y - i, w + temp, h + temp);
       } else {
         g.setColor(Color.BLACK);
@@ -221,6 +239,28 @@ class MyClock extends JFrame implements Runnable {
     this.drawNumbers(g);
   }
 
+  private void drawControls() {
+    SpinnerModel hourModel = new SpinnerNumberModel(12, 1, 12, 1);
+    SpinnerModel minSecModel = new SpinnerNumberModel(0, 0, 60, 1);
+
+    JSpinner hourSpinner = new JSpinner(hourModel);
+    JSpinner minSpinner = new JSpinner(minSecModel);
+    JSpinner secSpinner = new JSpinner(minSecModel);
+
+    hourSpinner.setLocation(100, 500);
+    hourSpinner.setSize(50, 25);
+
+    minSpinner.setLocation(210, 500);
+    minSpinner.setSize(50, 25);
+    
+    secSpinner.setLocation(320, 500);
+    secSpinner.setSize(50, 25);
+
+    this.getContentPane().add(hourSpinner);
+    this.getContentPane().add(minSpinner);
+    this.getContentPane().add(secSpinner);
+  }
+
   private double degToRad(int ang) {
     return ang * Math.PI / 180;
   }
@@ -270,8 +310,10 @@ class MyClock extends JFrame implements Runnable {
     // Paint buffer
     g.drawImage(this.buffer, 0, 0, this);
 
-    // Draw seconds' hand
+    // Draw seconds' hand and play sound
     this.second = cal.get(Calendar.SECOND);
+    this.playTickAudio();
+
     g.setColor(Color.GREEN);
     g.drawLine(center, center, secCoords[0], secCoords[1]);
     if(!areSmallHandsDrawn) {
@@ -279,6 +321,20 @@ class MyClock extends JFrame implements Runnable {
       g.setColor(Color.BLACK);
       g.drawLine(center, center, hourCoords[0], hourCoords[1]);
       g.drawLine(center, center, minCoords[0], minCoords[1]);
+    }
+  }
+
+  private void playTickAudio() {
+    String audioFileName = "./clockTickTrimmed.wav";
+
+    try {
+      File audioFile = new File(audioFileName);
+      
+      Clip clip = AudioSystem.getClip();
+      clip.open(AudioSystem.getAudioInputStream(audioFile));
+      clip.start();
+    } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
+      e.printStackTrace();
     }
   }
 
