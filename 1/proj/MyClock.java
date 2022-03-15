@@ -69,7 +69,8 @@ class MyClock extends JFrame implements Runnable {
     this.SECHANDLEN = (int) (0.4 * (this.width - this.margin));
 
     // Double buffering
-    this.background = this.buffer = null;
+    this.background = null;
+    this.buffer = null;
 
     // Load background Image
     try {
@@ -95,7 +96,7 @@ class MyClock extends JFrame implements Runnable {
     setLayout(null);
 
     // Draw controls
-    this.drawControls();
+    //this.drawControls();
   }
 
   public void visible(boolean visible) {
@@ -282,7 +283,6 @@ class MyClock extends JFrame implements Runnable {
     int[] minCoords = this.computeCoords(this.MINHANDLEN, 6 * this.minute + 90);
     int[] hourCoords = this.computeCoords(this.HOURHANDLEN, 30 * this.hour + 90);
 
-    boolean areSmallHandsDrawn = false;
     int center = this.width / 2;
 
     // Set area to draw
@@ -295,6 +295,10 @@ class MyClock extends JFrame implements Runnable {
     gBuffer.setClip(0, 0, getWidth(), getHeight());
     gBuffer.drawImage(this.background, 0, 0, this);
 
+    gBuffer.setColor(Color.BLACK);
+    gBuffer.drawLine(center, center, hourCoords[0], hourCoords[1]);
+    gBuffer.drawLine(center, center, minCoords[0], minCoords[1]);
+
     if(cal.get(Calendar.MINUTE) != this.minute) {
 
       this.hour = cal.get(Calendar.HOUR);
@@ -304,7 +308,6 @@ class MyClock extends JFrame implements Runnable {
       gBuffer.setColor(Color.BLACK);
       gBuffer.drawLine(center, center, hourCoords[0], hourCoords[1]);
       gBuffer.drawLine(center, center, minCoords[0], minCoords[1]);
-      areSmallHandsDrawn = true;
     }
 
     // Paint buffer
@@ -316,12 +319,6 @@ class MyClock extends JFrame implements Runnable {
 
     g.setColor(Color.GREEN);
     g.drawLine(center, center, secCoords[0], secCoords[1]);
-    if(!areSmallHandsDrawn) {
-      // Draw clock's small hands
-      g.setColor(Color.BLACK);
-      g.drawLine(center, center, hourCoords[0], hourCoords[1]);
-      g.drawLine(center, center, minCoords[0], minCoords[1]);
-    }
   }
 
   private void playTickAudio() {
