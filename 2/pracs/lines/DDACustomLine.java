@@ -24,14 +24,18 @@ public class DDACustomLine extends CustomLine {
         double xInc = dx / (double) step;
         double yInc = dy / (double) step;
 
-        int x = this.point1.x();
-        int y = this.point1.y();
+        System.out.println(yInc);
+
+        double x = this.point1.x();
+        double y = this.point1.y();
 
         for(int i = 0; i <= step; i++) {
-            computedPoints.add(new CustomPoint(x, y));
+            computedPoints.add(new CustomPoint(
+                (int) Math.round(x),
+                (int) Math.round(y)));
 
-            x = (int) Math.round(x + xInc);
-            y = (int) Math.round(y + yInc);
+            x = x + xInc;
+            y = y + yInc;
         }
 
         return computedPoints;
