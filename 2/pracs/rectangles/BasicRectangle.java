@@ -23,10 +23,10 @@ public class BasicRectangle extends CustomRectangle {
         CustomPoint p4 = new CustomPoint(this.point2.x(), this.point2.y());
 
         LinesFactory linesFactory = new LinesFactory();
-        CustomLine line1 = linesFactory.getCustomLine(p1, p2, 0);
-        CustomLine line2 = linesFactory.getCustomLine(p1, p3, 0);
-        CustomLine line3 = linesFactory.getCustomLine(p2, p4, 0);
-        CustomLine line4 = linesFactory.getCustomLine(p3, p4, 0);
+        CustomLine line1 = linesFactory.getCustomLine(p1, p2, 0, LinesFactory.DEFAULT_MASK);
+        CustomLine line2 = linesFactory.getCustomLine(p1, p3, 0, LinesFactory.DEFAULT_MASK);
+        CustomLine line3 = linesFactory.getCustomLine(p2, p4, 0, LinesFactory.DEFAULT_MASK);
+        CustomLine line4 = linesFactory.getCustomLine(p3, p4, 0, LinesFactory.DEFAULT_MASK);
 
         computedPoints = line1.computeLinePoints();
         computedPoints.addAll(line2.computeLinePoints());

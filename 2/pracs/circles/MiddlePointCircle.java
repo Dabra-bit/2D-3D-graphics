@@ -5,26 +5,23 @@ import java.util.ArrayList;
 
 import points.CustomPoint;
 
-public class EightSidedCircle extends CustomCircle {
+public class MiddlePointCircle extends CustomCircle {
 
-    private static final double ANGLE_STEP = 0.001;
-    private static final double LIMIT = Math.PI / 4;
-
-    public EightSidedCircle(CustomPoint center, int radius) {
+    public MiddlePointCircle(CustomPoint center, int radius) {
         super(center, radius);
     }
 
     @Override
     public List<CustomPoint> computeFigurePoints() {
         List<CustomPoint> computedPoints = new ArrayList<>();
-
+        int pk = 1 - radius;
         int cX = center.x();
         int cY = center.y();
         
-        for(double t = 0; t <= LIMIT; t += ANGLE_STEP) {
-            int x = (int) Math.round(this.radius * Math.sin(t));
-            int y = (int) Math.round(this.radius * Math.cos(t));
+        int x = 0;
+        int y = radius;
 
+        while(x <= y) {
             computedPoints.add(new CustomPoint(cX + x, cY +  y));
             computedPoints.add(new CustomPoint(cX + x, cY - y));
             computedPoints.add(new CustomPoint(cX - x, cY +  y));
@@ -33,8 +30,16 @@ public class EightSidedCircle extends CustomCircle {
             computedPoints.add(new CustomPoint(cX - y, cY + x));
             computedPoints.add(new CustomPoint(cX + y, cY - x));
             computedPoints.add(new CustomPoint(cX - y, cY - x));
+            
+            if(pk < 0) {
+                pk += 2 * x + 3;
+                x++;
+            } else {
+                pk += 2 * x - 2 * y + 5;
+                x++; y--;
+            }
         }
-
+        
         return computedPoints;
     }
     

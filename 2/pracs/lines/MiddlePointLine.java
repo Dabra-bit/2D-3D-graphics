@@ -10,7 +10,7 @@ public class MiddlePointLine extends CustomLine {
         super(point1, point2);
     }
 
-    private boolean isHighSlope() {
+    private boolean isHighSlope2() {
         final int dy = this.point2.y() - this.point1.y();
         final int dx = this.point2.x() - this.point1.x();
 
@@ -24,7 +24,7 @@ public class MiddlePointLine extends CustomLine {
     }
 
     private void sortPoints() {
-        boolean typeOfSlope = this.isHighSlope();
+        boolean typeOfSlope = this.isHighSlope2();
 
         if(typeOfSlope == LOW_SLOPE && this.point1.x() > this.point2.x()) {
             this.swapPoints();

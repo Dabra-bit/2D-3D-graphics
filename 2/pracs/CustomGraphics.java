@@ -84,10 +84,15 @@ public class CustomGraphics extends JPanel {
         this.drawFigure(pointsToDraw);
     }
 
-    public void drawLine(CustomPoint p1, CustomPoint p2, int lineType) {
+    public void drawLine(CustomPoint p1, CustomPoint p2, int lineType, int thick, boolean[] mask) {
         LinesFactory linesFactory = new LinesFactory();
-        CustomLine newLine = linesFactory.getCustomLine(p1, p2, lineType);
+        CustomLine newLine = linesFactory.getCustomLine(p1, p2, lineType, mask);
         List<CustomPoint> pointsToDraw = newLine.computeLinePoints();
+        pointsToDraw = newLine.filterLine(pointsToDraw);
+
+        if(thick != 1) {
+            pointsToDraw = newLine.makeLineThicker(thick, pointsToDraw);
+        }
 
         this.drawFigure(pointsToDraw);
     }

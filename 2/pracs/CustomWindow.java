@@ -1,5 +1,8 @@
 import java.awt.Color;
 import javax.swing.JPanel;
+
+import factories.LinesFactory;
+
 import javax.swing.JFrame;
 import java.awt.Dimension;
 
@@ -38,16 +41,38 @@ public class CustomWindow extends JFrame {
         this.customGraphics.drawPixel(new CustomPoint(x, y));
     }
 
+    public void drawLine(int x1, int y1, int x2, int y2, int lineType, int thick, boolean[] mask) {
+        this.customGraphics.drawLine(
+            new CustomPoint(x1, y1),
+            new CustomPoint(x2, y2),
+            lineType,
+            thick,
+            mask
+            );
+    }
+
+    public void drawLine(int x1, int y1, int x2, int y2, int lineType, int thick) {
+        this.customGraphics.drawLine(
+            new CustomPoint(x1, y1),
+            new CustomPoint(x2, y2),
+            lineType,
+            thick,
+            LinesFactory.DEFAULT_MASK
+            );
+    }
+
     public void drawLine(int x1, int y1, int x2, int y2, int lineType) {
         this.customGraphics.drawLine(
             new CustomPoint(x1, y1),
             new CustomPoint(x2, y2),
-            lineType
+            lineType,
+            1,
+            LinesFactory.DEFAULT_MASK
             );
     }
 
     public void drawLine(int x1, int y1, int x2, int y2) {
-        this.drawLine(x1, y1, x2, y2, 0);
+        this.drawLine(x1, y1, x2, y2, 0, 1, LinesFactory.DEFAULT_MASK);
     }
 
     public void drawCircle(int x, int y, int radius, int circleType) {
