@@ -8,7 +8,7 @@ import lines.BresenhamCustomLine;
 import points.CustomPoint;
 
 public class LinesFactory {
-    public static final boolean[] DEFAULT_MASK = {true, true, true, true, true, true, true, true, true, true};
+    public static final boolean[] DEFAULT_MASK = { true, true, true, true, true, true, true, true, true, true };
     public static final int LINE_EQ_LINE = 1;
     public static final int DDA_LINE = 2;
     public static final int BRESENHAM_LINE = 3;
@@ -16,7 +16,7 @@ public class LinesFactory {
     public static final int DEFAULT_LINE = BRESENHAM_LINE;
 
     public CustomLine getCustomLine(CustomPoint point1, CustomPoint point2, int lineType, boolean[] mask) {
-        if(lineType == 0) {
+        if (lineType == 0) {
             lineType = DEFAULT_LINE;
         }
         CustomLine line = null;

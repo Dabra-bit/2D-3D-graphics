@@ -16,24 +16,34 @@ public class CircleFactory {
     public static final int BRESENHAM_CIRCLE = 5;
     public static final int DEFAULT_CIRCLE = BRESENHAM_CIRCLE;
 
-    public CustomCircle getCircle(CustomPoint center, int radius, int circleType) {
-        if(circleType == 0) {
-            circleType = POLAR_COORDS_CIRCLE;
+    public CustomCircle getCircle(CustomPoint center, int radius, int circleType, boolean[] mask) {
+        if (circleType == 0) {
+            circleType = DEFAULT_CIRCLE;
         }
-        
-        switch(circleType) {
+
+        CustomCircle circle = null;
+
+        switch (circleType) {
             case BASIC_CIRCLE:
-                return new BasicCircle(center, radius);
+                circle = new BasicCircle(center, radius);
+                break;
             case POLAR_COORDS_CIRCLE:
-                return new PolarCoordsCircle(center, radius);
+                circle = new PolarCoordsCircle(center, radius);
+                break;
             case EIGHT_SIDED_CIRCLE:
-                return new EightSidedCircle(center, radius);
+                circle = new EightSidedCircle(center, radius);
+                break;
             case MIDDLE_POINT_CIRCLE:
-                return new MiddlePointCircle(center, radius);
+                circle = new MiddlePointCircle(center, radius);
+                break;
             case BRESENHAM_CIRCLE:
-                return new BresenhamCircle(center, radius);
+                circle = new BresenhamCircle(center, radius);
+                break;
             default:
+                System.out.println("Line not found");
                 return null;
         }
+        circle.setMask(mask);
+        return circle;
     }
 }

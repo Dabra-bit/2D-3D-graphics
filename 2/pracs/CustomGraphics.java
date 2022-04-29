@@ -65,7 +65,7 @@ public class CustomGraphics extends JPanel {
     private void paintPixel(CustomPoint p) {
         this.pixel.setRGB(0, 0, this.color.getRGB());
 
-        if(this.drawnImage == null)
+        if (this.drawnImage == null)
             this.paint(this.getGraphics());
 
         this.drawnImageGraphics.drawImage(this.pixel, p.x(), p.y(), this);
@@ -88,40 +88,50 @@ public class CustomGraphics extends JPanel {
         LinesFactory linesFactory = new LinesFactory();
         CustomLine newLine = linesFactory.getCustomLine(p1, p2, lineType, mask);
         List<CustomPoint> pointsToDraw = newLine.computeLinePoints();
+
+        // Apply mask
         pointsToDraw = newLine.filterLine(pointsToDraw);
 
-        if(thick != 1) {
+        // Line thick
+        if (thick != 1) {
             pointsToDraw = newLine.makeLineThicker(thick, pointsToDraw);
         }
 
         this.drawFigure(pointsToDraw);
     }
 
-    public void drawCircle(CustomPoint center, int radius, int circleType) {
+    public void drawCircle(CustomPoint center, int radius, int circleType, int thick, boolean[] mask) {
         CircleFactory circleFactory = new CircleFactory();
-        CustomCircle newCircle = circleFactory.getCircle(center, radius, circleType);
+        CustomCircle newCircle = circleFactory.getCircle(center, radius, circleType, mask);
         List<CustomPoint> pointsToDraw = newCircle.computeFigurePoints();
-        
+
+        // Apply mask
+        pointsToDraw = newCircle.filterCircle(pointsToDraw);
+
+        if (thick > 1) {
+            pointsToDraw = CustomCircle.makeCircleThicker(thick, pointsToDraw);
+        }
+
         this.drawFigure(pointsToDraw);
     }
 
     public void drawEllipse(CustomPoint center, int yRadius, int xRadius) {
         CustomEllipse newEllipse = new BasicEllipse(center, yRadius, xRadius);
         List<CustomPoint> pointsToDraw = newEllipse.computeFigurePoints();
-        
+
         this.drawFigure(pointsToDraw);
     }
 
     public void drawRectangle(CustomPoint point1, CustomPoint point2) {
         CustomRectangle newRectangle = new BasicRectangle(point1, point2);
         List<CustomPoint> pointsToDraw = newRectangle.computeFigurePoints();
-        
+
         this.drawFigure(pointsToDraw);
     }
 
     @Override
     public void paint(Graphics g) {
-        if(this.drawnImage == null) {
+        if (this.drawnImage == null) {
             this.drawnImage = createImage(getWidth(), getHeight());
         }
         this.drawnImageGraphics = this.drawnImage.getGraphics();

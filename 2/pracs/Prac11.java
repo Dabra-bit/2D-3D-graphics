@@ -1,5 +1,6 @@
 import java.awt.Color;
 
+import circles.CustomCircle;
 import factories.CircleFactory;
 import points.CustomPoint;
 
@@ -10,7 +11,8 @@ public class Prac11 {
 
         CustomPoint point1 = new CustomPoint(100, 70);
 
-        cw.drawCircle(point1.x(), point1.y(), 50, CircleFactory.BRESENHAM_CIRCLE);
+        cw.drawCircle(point1.x(), point1.y(), 50, CircleFactory.BRESENHAM_CIRCLE, CustomCircle.DEFAULT_THICKNESS,
+                CustomCircle.DEFAULT_MASK);
         cw.repaint();
     }
 }
