@@ -24,8 +24,6 @@ public class DDACustomLine extends CustomLine {
         double xInc = dx / (double) step;
         double yInc = dy / (double) step;
 
-        System.out.println(yInc);
-
         double x = this.point1.x();
         double y = this.point1.y();
 

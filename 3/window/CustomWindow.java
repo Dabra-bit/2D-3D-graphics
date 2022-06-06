@@ -1,4 +1,5 @@
 package window;
+
 import java.awt.Color;
 import javax.swing.JPanel;
 
@@ -6,7 +7,7 @@ import circles.CustomCircle;
 import factories.CircleFactory;
 import factories.LinesFactory;
 import graphics.CustomGraphics;
-import lines.Line3D;
+import helpers.Constants3D;
 
 import javax.swing.JFrame;
 import java.awt.Dimension;
@@ -97,15 +98,28 @@ public class CustomWindow extends JFrame {
         this.drawLine(x1, y1, x2, y2, LinesFactory.DEFAULT_LINE, 1, LinesFactory.DEFAULT_MASK);
     }
 
-    public void drawLine3D(BasePoint3D p1, BasePoint3D p2, int projectionType, BasePoint3D vPoint3d) {
-        Line3D line = new Line3D(p1, p2, projectionType, vPoint3d);
-        CustomPoint[] points = line.getPoints();
+    public void drawFigure3D(BasePoint3D[] vertices, int[][] edges, int projectionType, BasePoint3D vPoint3d) {
+        for(int[] edge : edges) {
+            BasePoint3D p1 = vertices[edge[0]];
+            BasePoint3D p2 = vertices[edge[1]];
 
-        this.customGraphics.drawLine(points[0], points[1], LinesFactory.DEFAULT_LINE, 1, LinesFactory.DEFAULT_MASK);
+            CustomPoint _p1 = BasePoint3D.to2D(p1, projectionType, vPoint3d);
+            CustomPoint _p2 = BasePoint3D.to2D(p2, projectionType, vPoint3d);
+
+            this.customGraphics.drawLine(_p1, _p2, LinesFactory.DEFAULT_LINE, 1, LinesFactory.DEFAULT_MASK);
+        }
+    }
+
+    public void drawLine3D(BasePoint3D p1, BasePoint3D p2, int projectionType, BasePoint3D vPoint3d) {
+        // Line3D line = new Line3D(p1, p2, projectionType, vPoint3d);
+        CustomPoint _p1 = BasePoint3D.to2D(p1, projectionType, vPoint3d);
+        CustomPoint _p2 = BasePoint3D.to2D(p2, projectionType, vPoint3d);
+
+        this.customGraphics.drawLine(_p1, _p2, LinesFactory.DEFAULT_LINE, 1, LinesFactory.DEFAULT_MASK);
     }
 
     public void drawLine3D(BasePoint3D p1, BasePoint3D p2) {
-        drawLine3D(p1, p2, Line3D.DEF_PROJECTION, Line3D.DEF_PROJ_P);
+        drawLine3D(p1, p2, Constants3D.DEF_PROJECTION, Constants3D.DEF_PROJ_P);
     }
 
     public void drawCircle(int x, int y, int radius, int circleType, int thick, boolean[] mask) {
